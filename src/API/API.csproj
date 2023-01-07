@@ -10,6 +10,7 @@
     <ItemGroup>
         <PackageReference Include="Docker.DotNet" Version="3.125.10" />
         <PackageReference Include="FluentValidation.AspNetCore" Version="11.0.1" />
+        <PackageReference Include="Microsoft.Data.SqlClient" Version="5.0.1" />
         <PackageReference Include="Npgsql" Version="6.0.4" />
         <PackageReference Include="ValueOf" Version="2.0.31" />
         <PackageReference Include="Dapper" Version="2.0.123" />

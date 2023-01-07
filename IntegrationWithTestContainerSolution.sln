@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API..Integration.Tests", "t
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "src\API\API.csproj", "{4DFB8865-34B8-47E3-ACD4-5D40B22E74DA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Integration.SqlServer", "API.Integration.SqlServer\API.Integration.SqlServer.csproj", "{CD37AEE2-1A6D-44EF-AD69-926A3D1C1150}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{4DFB8865-34B8-47E3-ACD4-5D40B22E74DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DFB8865-34B8-47E3-ACD4-5D40B22E74DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DFB8865-34B8-47E3-ACD4-5D40B22E74DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD37AEE2-1A6D-44EF-AD69-926A3D1C1150}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD37AEE2-1A6D-44EF-AD69-926A3D1C1150}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD37AEE2-1A6D-44EF-AD69-926A3D1C1150}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD37AEE2-1A6D-44EF-AD69-926A3D1C1150}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,6 +38,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{C558AC1F-3AE0-4F01-91F7-A61CFC946170} = {BC5A0D96-73DE-4680-AA00-97045110265B}
 		{4DFB8865-34B8-47E3-ACD4-5D40B22E74DA} = {7218F293-7E90-46C1-8996-756F7F6A05DE}
+		{CD37AEE2-1A6D-44EF-AD69-926A3D1C1150} = {BC5A0D96-73DE-4680-AA00-97045110265B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {428D7BE3-DB0E-43AA-B283-0C87DCCFECDF}

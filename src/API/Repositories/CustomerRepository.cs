@@ -27,7 +27,7 @@ public class CustomerRepository : ICustomerRepository
     {
         using var connection = await _connectionFactory.CreateConnectionAsync();
         return await connection.QuerySingleOrDefaultAsync<CustomerDto>(
-            "SELECT TOP(1) * FROM Customers WHERE Id = @Id ", new { Id = id });
+            "SELECT  * FROM Customers WHERE Id = @Id ", new { Id = id });
     }
 
     public async Task<IEnumerable<CustomerDto>> GetAllAsync()

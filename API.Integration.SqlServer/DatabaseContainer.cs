@@ -1,11 +1,8 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using API.Integration.SqlServer;
-using DotNet.Testcontainers.Builders;
+﻿using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Containers;
 using Microsoft.Extensions.Hosting;
 
-namespace WeatherForecast;
+namespace API.Integration.SqlServer;
 
 public sealed class DatabaseContainer : IHostedService
 {

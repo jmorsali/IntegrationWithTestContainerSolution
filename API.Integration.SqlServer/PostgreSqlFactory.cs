@@ -7,9 +7,8 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Xunit;
 
-namespace API.Tests.Integration;
+namespace API.Integration.SqlServer;
 
 public class PostgreSqlFactory : WebApplicationFactory<IApiMarker>, IAsyncLifetime
 {

@@ -3,6 +3,7 @@ using System.Net.Http.Json;
 using Bogus;
 using API.Contracts.Requests;
 using API.Contracts.Responses;
+using API.Integration.SqlServer;
 using FluentAssertions;
 using Xunit;
 

@@ -1,25 +1,25 @@
-﻿using API.Contracts.Requests;
+﻿using System.Text.RegularExpressions;
+using API.Contracts.Requests;
 using FluentValidation;
-using System.Text.RegularExpressions;
 
 namespace API.Validation;
 
-public class CustomerRequestValidator : AbstractValidator<CustomerRequest>
+public class UpdateCustomerRequestValidator :  AbstractValidator<UpdateCustomerRequest>
 {
-    public CustomerRequestValidator()
+    public UpdateCustomerRequestValidator()
     {
-        RuleFor(x => x.FullName).NotEmpty();
-        RuleFor(x => x.Email).NotEmpty();
-        RuleFor(x => x.GitHubUsername).NotEmpty();
-        RuleFor(x => x.DateOfBirth).NotEmpty();
+        RuleFor(x => x.Customer.FullName).NotEmpty();
+        RuleFor(x => x.Customer.Email).NotEmpty();
+        RuleFor(x => x.Customer.GitHubUsername).NotEmpty();
+        RuleFor(x => x.Customer.DateOfBirth).NotEmpty();
 
-        RuleFor(x => x.GitHubUsername).Custom(ValidateGitHubUsername);
-        RuleFor(x => x.Email).Custom(ValidateEmail);
-        RuleFor(x => x.FullName).Custom(ValidateFullName);
-        RuleFor(x => x.DateOfBirth).Custom(ValidateDateOfBirth);
+        RuleFor(x => x.Customer.GitHubUsername).Custom(ValidateGitHubUsername);
+        RuleFor(x => x.Customer.Email).Custom(ValidateEmail);
+        RuleFor(x => x.Customer.FullName).Custom(ValidateFullName);
+        RuleFor(x => x.Customer.DateOfBirth).Custom(ValidateDateOfBirth);
     }
 
-    private void ValidateFullName(string fullname, ValidationContext<CustomerRequest> context)
+    private void ValidateFullName(string fullname, ValidationContext<UpdateCustomerRequest> context)
     {
         Regex fullNameRegex = new("^[a-z ,.'-]+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
@@ -29,7 +29,7 @@ public class CustomerRequestValidator : AbstractValidator<CustomerRequest>
             context.AddFailure(message);
         }
     }
-    private void ValidateEmail(string email, ValidationContext<CustomerRequest> context)
+    private void ValidateEmail(string email, ValidationContext<UpdateCustomerRequest> context)
     {
         Regex emailRegex =
             new("^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$",
@@ -43,7 +43,7 @@ public class CustomerRequestValidator : AbstractValidator<CustomerRequest>
 
     }
 
-    private void ValidateDateOfBirth(DateTime dateOfBirth, ValidationContext<CustomerRequest> context)
+    private void ValidateDateOfBirth(DateTime dateOfBirth, ValidationContext<UpdateCustomerRequest> context)
     {
         if (dateOfBirth > DateTime.Now.Date)
         {
@@ -51,7 +51,7 @@ public class CustomerRequestValidator : AbstractValidator<CustomerRequest>
             context.AddFailure(message);
         }
     }
-    private void ValidateGitHubUsername(string username, ValidationContext<CustomerRequest> context)
+    private void ValidateGitHubUsername(string username, ValidationContext<UpdateCustomerRequest> context)
     {
         Regex usernameRegex = new("^[a-z\\d](?:[a-z\\d]|-(?=[a-z\\d])){0,38}$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         if (!usernameRegex.IsMatch(username))

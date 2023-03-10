@@ -3,11 +3,6 @@ using Npgsql;
 
 namespace API.Database;
 
-public interface IDbConnectionFactory
-{
-    public Task<IDbConnection> CreateConnectionAsync();
-}
-
 public class NpgsqlConnectionFactory : IDbConnectionFactory
 {
     private readonly string _connectionString;

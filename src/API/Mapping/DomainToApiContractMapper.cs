@@ -9,11 +9,11 @@ public static class DomainToApiContractMapper
     {
         return new CustomerResponse
         {
-            Id = customer.Id.Value,
-            Email = customer.Email.Value,
-            GitHubUsername = customer.GitHubUsername.Value,
-            FullName = customer.FullName.Value,
-            DateOfBirth = customer.DateOfBirth.Value.ToDateTime(TimeOnly.MinValue)
+            Id = customer.Id,
+            Email = customer.Email,
+            GitHubUsername = customer.GitHubUsername,
+            FullName = customer.FullName,
+            DateOfBirth = customer.DateOfBirth.Date
         };
     }
 
@@ -23,11 +23,11 @@ public static class DomainToApiContractMapper
         {
             Customers = customers.Select(x => new CustomerResponse
             {
-                Id = x.Id.Value,
-                Email = x.Email.Value,
-                GitHubUsername = x.GitHubUsername.Value,
-                FullName = x.FullName.Value,
-                DateOfBirth = x.DateOfBirth.Value.ToDateTime(TimeOnly.MinValue)
+                Id = x.Id,
+                Email = x.Email,
+                GitHubUsername = x.GitHubUsername,
+                FullName = x.FullName,
+                DateOfBirth = x.DateOfBirth.Date
             })
         };
     }

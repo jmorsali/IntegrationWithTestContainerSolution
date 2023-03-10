@@ -1,16 +1,18 @@
-﻿using API.Domain.Common;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Domain;
 
 public class Customer
 {
-    public CustomerId Id { get; init; } = CustomerId.From(Guid.NewGuid());
+    [DatabaseGenerated(DatabaseGeneratedOption.None)]
+    public Guid Id { get; set; } = Guid.NewGuid();
 
-    public GitHubUsername GitHubUsername { get; init; } = default!;
+    public string GitHubUsername { get; set; } = default!;
 
-    public FullName FullName { get; init; } = default!;
+    public string FullName { get; set; } = default!;
 
-    public Email Email { get; init; } = default!;
+    public string Email { get; set; } = default!;
 
-    public DateOfBirth DateOfBirth { get; init; } = default!;
+    public DateTime DateOfBirth { get; set; } = default!;
 }
+

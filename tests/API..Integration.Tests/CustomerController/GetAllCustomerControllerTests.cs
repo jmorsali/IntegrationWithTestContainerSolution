@@ -8,7 +8,7 @@ using Xunit;
 
 namespace API.Tests.Integration.ControllerTest;
 
-public class GetAllControllerTestTests : IClassFixture<CustomFactory>
+public class GetAllControllerTestTests : IClassFixture<SqlServerFactory>
 {
     private readonly HttpClient _client;
 
@@ -18,7 +18,7 @@ public class GetAllControllerTestTests : IClassFixture<CustomFactory>
         .RuleFor(x => x.GitHubUsername, "ZahraBayatgh")
         .RuleFor(x => x.DateOfBirth, faker => faker.Person.DateOfBirth.Date);
 
-    public GetAllControllerTestTests(CustomFactory apiFactory)
+    public GetAllControllerTestTests(SqlServerFactory apiFactory)
     {
         _client = apiFactory.CreateClient();
     }
@@ -38,7 +38,7 @@ public class GetAllControllerTestTests : IClassFixture<CustomFactory>
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         var customersResponse = await response.Content.ReadFromJsonAsync<GetAllCustomersResponse>();
         customersResponse!.Customers.Single().Should().BeEquivalentTo(createdCustomer);
-        
+
         // Cleanup
         await _client.DeleteAsync($"customers/{createdCustomer!.Id}");
     }

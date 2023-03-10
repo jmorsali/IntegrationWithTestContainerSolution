@@ -9,7 +9,7 @@ using Xunit;
 
 namespace API.Tests.Integration.ControllerTest;
 
-public class UpdateControllerTestTests : IClassFixture<CustomFactory>
+public class UpdateControllerTestTests : IClassFixture<SqlServerFactory>
 {
     private readonly HttpClient _client;
 
@@ -19,7 +19,7 @@ public class UpdateControllerTestTests : IClassFixture<CustomFactory>
         .RuleFor(x => x.GitHubUsername, "ZahraBayatgh")
         .RuleFor(x => x.DateOfBirth, faker => faker.Person.DateOfBirth.Date);
 
-    public UpdateControllerTestTests(CustomFactory apiFactory)
+    public UpdateControllerTestTests(SqlServerFactory apiFactory)
     {
         _client = apiFactory.CreateClient();
     }
@@ -63,6 +63,6 @@ public class UpdateControllerTestTests : IClassFixture<CustomFactory>
         var error = await response.Content.ReadFromJsonAsync<ValidationProblemDetails>();
         error!.Status.Should().Be(400);
         error.Title.Should().Be("One or more validation errors occurred.");
-        error.Errors["Email"][0].Should().Be($"{invalidEmail} is not a valid email address");
+        error.Errors["Customer.Email"][0].Should().Be($"{invalidEmail} is not a valid email address");
     }
 }

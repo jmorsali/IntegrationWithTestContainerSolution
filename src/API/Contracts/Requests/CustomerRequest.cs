@@ -1,4 +1,7 @@
-﻿namespace API.Contracts.Requests;
+﻿using FluentValidation;
+using System.Text.RegularExpressions;
+
+namespace API.Contracts.Requests;
 
 public class CustomerRequest
 {
@@ -10,3 +13,4 @@ public class CustomerRequest
 
     public DateTime DateOfBirth { get; init; } = default!;
 }
+

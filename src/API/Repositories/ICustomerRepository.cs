@@ -1,16 +1,17 @@
 ﻿using API.Contracts.Data;
+using API.Domain;
 
 namespace API.Repositories;
 
 public interface ICustomerRepository
 {
-    Task<bool> CreateAsync(CustomerDto customer);
+    Task<bool> CreateAsync(Customer customer);
 
-    Task<CustomerDto?> GetAsync(Guid id);
+    Task<Customer> GetAsync(Guid id);
 
-    Task<IEnumerable<CustomerDto>> GetAllAsync();
+    Task<IEnumerable<Customer>> GetAllAsync();
 
-    Task<bool> UpdateAsync(CustomerDto customer);
+    Task<bool> UpdateAsync(Customer customer);
 
     Task<bool> DeleteAsync(Guid id);
 }

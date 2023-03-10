@@ -8,7 +8,7 @@ using Xunit;
 
 namespace API.Tests.Integration.ControllerTest;
 
-public class DeleteControllerTestTests : IClassFixture<CustomFactory>
+public class DeleteControllerTestTests : IClassFixture<SqlServerFactory>
 {
     private readonly HttpClient _client;
 
@@ -18,7 +18,7 @@ public class DeleteControllerTestTests : IClassFixture<CustomFactory>
         .RuleFor(x => x.GitHubUsername, "ZahraBayatgh")
         .RuleFor(x => x.DateOfBirth, faker => faker.Person.DateOfBirth.Date);
 
-    public DeleteControllerTestTests(CustomFactory apiFactory)
+    public DeleteControllerTestTests(SqlServerFactory apiFactory)
     {
         _client = apiFactory.CreateClient();
     }

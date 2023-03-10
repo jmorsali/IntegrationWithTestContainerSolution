@@ -6,10 +6,12 @@ using API.Contracts.Responses;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
+using API.Repositories;
+using API.Database;
 
 namespace API.Tests.Integration.ControllerTest;
 
-public class CreateControllerTestTests : IClassFixture<CustomFactory>
+public class CreateControllerTestTests : IClassFixture<PostgreSqlFactory>
 {
     private readonly HttpClient _client;
 
@@ -19,7 +21,7 @@ public class CreateControllerTestTests : IClassFixture<CustomFactory>
         .RuleFor(x => x.GitHubUsername, "ZahraBayatgh")
         .RuleFor(x => x.DateOfBirth, faker => faker.Person.DateOfBirth.Date);
 
-    public CreateControllerTestTests(CustomFactory apiFactory)
+    public CreateControllerTestTests(PostgreSqlFactory apiFactory)
     {
         _client = apiFactory.CreateClient();
     }
@@ -39,6 +41,29 @@ public class CreateControllerTestTests : IClassFixture<CustomFactory>
         response.StatusCode.Should().Be(HttpStatusCode.Created);
         response.Headers.Location!.ToString().Should()
             .Be($"http://localhost/customers/{customerResponse!.Id}");
+    }
+
+    [Fact]
+    public async Task Create_CreatesUser_WhenDataIsValid_RecodeExistInDB()
+    {
+        // Arrange
+        var customer = _customerGenerator.Generate();
+
+        // Act
+        var response = await _client.PostAsJsonAsync("customers", customer);
+
+        // Assert
+        var customerResponse = await response.Content.ReadFromJsonAsync<CustomerResponse>();
+        customerResponse.Should().BeEquivalentTo(customer);
+        response.StatusCode.Should().Be(HttpStatusCode.Created);
+        response.Headers.Location!.ToString().Should()
+            .Be($"http://localhost/customers/{customerResponse!.Id}");
+
+       var customerGetResponse= await _client.GetAsync($"customers/{customerResponse!.Id}");
+       var customerDbRecord= await customerGetResponse.Content.ReadFromJsonAsync<CustomerResponse>();
+       customerDbRecord.Should().BeEquivalentTo(customer);
+       customerGetResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+       
     }
 
     [Fact]

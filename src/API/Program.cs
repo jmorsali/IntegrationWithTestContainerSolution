@@ -3,6 +3,7 @@ using API.Repositories;
 using API.Services;
 using API.Validation;
 using FluentValidation.AspNetCore;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
@@ -22,10 +23,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<IDbConnectionFactory>(_ =>
-    new NpgsqlConnectionFactory(config.GetValue<string>("Database:ConnectionString")));
-builder.Services.AddSingleton<DatabaseInitializer>();
-builder.Services.AddSingleton<ICustomerRepository, CustomerRepository>();
-builder.Services.AddSingleton<ICustomerService, CustomerService>();
+    new NpgsqlConnectionFactory(config.GetConnectionString("ConnectionString")));
+builder.Services.AddScoped<DatabaseInitializer>();
+builder.Services.AddScoped<ICustomerRepository, EFCustomerRepository>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+
+builder.Services.AddDbContext<SaleDbStore>(options => options.UseSqlServer(config.GetConnectionString("ConnectionString")));
+
+
 
 var app = builder.Build();
 
@@ -34,6 +39,19 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    using var scope = app.Services.CreateScope();
+    var services = scope.ServiceProvider;
+    try
+    {
+        var databaseInitializer = services.GetRequiredService<DatabaseInitializer>();
+        databaseInitializer.Initialize();
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while seeding the database.");
+        throw;
+    }
 }
 
 app.UseHttpsRedirection();
@@ -44,7 +62,6 @@ app.UseMiddleware<ValidationExceptionMiddleware>();
 
 app.MapControllers();
 
-var databaseInitializer = app.Services.GetRequiredService<DatabaseInitializer>();
-await databaseInitializer.InitializeAsync();
+
 
 app.Run();

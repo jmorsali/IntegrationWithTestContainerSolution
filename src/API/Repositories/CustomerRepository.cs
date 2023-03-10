@@ -27,10 +27,10 @@ public class CustomerRepository : ICustomerRepository
     {
         using var connection = await _connectionFactory.CreateConnectionAsync();
         return await connection.QuerySingleOrDefaultAsync<CustomerDto>(
-            "SELECT  * FROM Customers WHERE Id = @Id ", new { Id = id });
+            "SELECT TOP 1 * FROM Customers WHERE Id = @Id ", new { Id = id });
     }
 
-    public async Task<IEnumerable<CustomerDto>> GetAllAsync()
+    public async Task<IEnumerable<CustomerDto?>> GetAllAsync()
     {
         using var connection = await _connectionFactory.CreateConnectionAsync();
         return await connection.QueryAsync<CustomerDto>("SELECT * FROM Customers");
@@ -50,7 +50,7 @@ public class CustomerRepository : ICustomerRepository
     {
         using var connection = await _connectionFactory.CreateConnectionAsync();
         var result = await connection.ExecuteAsync(@"DELETE FROM Customers WHERE Id = @Id",
-            new {Id = id});
+            new { Id = id });
         return result > 0;
     }
 }

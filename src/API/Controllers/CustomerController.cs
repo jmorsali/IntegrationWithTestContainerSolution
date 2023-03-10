@@ -1,5 +1,6 @@
 using API.Attributes;
 using API.Contracts.Requests;
+using API.Domain;
 using API.Mapping;
 using API.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -41,7 +42,7 @@ public class ControllerTest : ControllerBase
         var customerResponse = customer.ToCustomerResponse();
         return Ok(customerResponse);
     }
-    
+
     [HttpGet("customers")]
     public async Task<IActionResult> GetAll()
     {
@@ -49,10 +50,9 @@ public class ControllerTest : ControllerBase
         var customersResponse = customers.ToCustomersResponse();
         return Ok(customersResponse);
     }
-    
+
     [HttpPut("customers/{id:guid}")]
-    public async Task<IActionResult> Update(
-        [FromMultiSource] UpdateCustomerRequest request)
+    public async Task<IActionResult> Update([FromMultiSource] UpdateCustomerRequest request)
     {
         var existingCustomer = await _customerService.GetAsync(request.Id);
 
@@ -61,13 +61,19 @@ public class ControllerTest : ControllerBase
             return NotFound();
         }
 
-        var customer = request.ToCustomer();
-        await _customerService.UpdateAsync(customer);
 
-        var customerResponse = customer.ToCustomerResponse();
+        existingCustomer.Id = request.Id;
+        existingCustomer.DateOfBirth = request.Customer.DateOfBirth;
+        existingCustomer.Email = request.Customer.Email;
+        existingCustomer.FullName = request.Customer.FullName;
+        existingCustomer.GitHubUsername = request.Customer.GitHubUsername;
+
+        await _customerService.UpdateAsync(existingCustomer);
+
+        var customerResponse = existingCustomer.ToCustomerResponse();
         return Ok(customerResponse);
     }
-    
+
     [HttpDelete("customers/{id:guid}")]
     public async Task<IActionResult> Delete([FromRoute] Guid id)
     {

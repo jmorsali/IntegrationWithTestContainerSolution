@@ -79,22 +79,22 @@ public class DatabaseInitializer
         _context.SaveChanges();
 
 
-        var customers = new Customer[]
-        {
-            new(){ FullName="Carson", GitHubUsername="Alexander", Email="", DateOfBirth=DateTime.Parse("2005-09-01")},
-            new() {  FullName = "Meredith", GitHubUsername = "Alonso", Email="",  DateOfBirth = DateTime.Parse("2002-09-01") },
-            new() { FullName = "Arturo", GitHubUsername = "Anand",Email="", DateOfBirth = DateTime.Parse("2003-09-01") },
-            new() { FullName = "Gytis", GitHubUsername = "Barzdukas",Email="", DateOfBirth = DateTime.Parse("2002-09-01") },
-            new() { FullName = "Yan", GitHubUsername = "Li",Email="", DateOfBirth = DateTime.Parse("2002-09-01") },
-            new() { FullName = "Peggy", GitHubUsername = "Justice",Email="", DateOfBirth = DateTime.Parse("2001-09-01") },
-            new() { FullName = "Laura", GitHubUsername = "Norman", Email = "", DateOfBirth = DateTime.Parse("2003-09-01") },
-            new() {FullName = "Nino", GitHubUsername = "Olivetto", Email = "", DateOfBirth = DateTime.Parse("2005-09-01")}
-        };
-        foreach (Customer c in customers)
-        {
-            _context.Customers.Add(c);
-        }
-        _context.SaveChanges();
+        //var customers = new Customer[]
+        //{
+        //    new(){ FullName="Carson", GitHubUsername="Alexander", Email="", DateOfBirth=DateTime.Parse("2005-09-01")},
+        //    new() {  FullName = "Meredith", GitHubUsername = "Alonso", Email="",  DateOfBirth = DateTime.Parse("2002-09-01") },
+        //    new() { FullName = "Arturo", GitHubUsername = "Anand",Email="", DateOfBirth = DateTime.Parse("2003-09-01") },
+        //    new() { FullName = "Gytis", GitHubUsername = "Barzdukas",Email="", DateOfBirth = DateTime.Parse("2002-09-01") },
+        //    new() { FullName = "Yan", GitHubUsername = "Li",Email="", DateOfBirth = DateTime.Parse("2002-09-01") },
+        //    new() { FullName = "Peggy", GitHubUsername = "Justice",Email="", DateOfBirth = DateTime.Parse("2001-09-01") },
+        //    new() { FullName = "Laura", GitHubUsername = "Norman", Email = "", DateOfBirth = DateTime.Parse("2003-09-01") },
+        //    new() {FullName = "Nino", GitHubUsername = "Olivetto", Email = "", DateOfBirth = DateTime.Parse("2005-09-01")}
+        //};
+        //foreach (Customer c in customers)
+        //{
+        //    _context.Customers.Add(c);
+        //}
+        //_context.SaveChanges();
     }
 }
 
